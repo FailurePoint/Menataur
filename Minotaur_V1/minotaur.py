@@ -53,7 +53,7 @@ def check_colors(provided_colors: list):
             """)
             exit()
 
-def validate_element_params(element_type, text, menu_option_number, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info):
+def validate_element_params(element_type, text, menu_option_number, menu_option, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info):
     # Validates the element_type
     if isinstance(element_type, str):
         pass
@@ -71,6 +71,12 @@ def validate_element_params(element_type, text, menu_option_number, accent_color
         pass
     else:
         print(f"{red}[!] Minotaur Error: {yellow}'menu_option_number{light_red} must be type: {yellow}int{reset}")
+        exit()
+    # Validates the menu_option
+    if isinstance(menu_option, str):
+        pass
+    else:
+        print(f"{red}[!] Minotaur Error: {yellow}'menu_option{light_red} must be type: {yellow}str{reset}")
         exit()
     # Validates the accent_color
     if isinstance(accent_color, str):
@@ -135,6 +141,74 @@ def validate_element_params(element_type, text, menu_option_number, accent_color
         print(f"{red}[!] Minotaur Error: {yellow}'os_support_info'{light_red} must be type: {yellow}str{reset}")
         exit()
 
+# Used to set the color to the actual color
+def determine_color(provided_color: str) -> str:
+    if provided_color == "blue":
+        provided_color = blue
+    elif provided_color == "light_blue":
+        provided_color = light_blue
+    elif provided_color == "cyan":
+        provided_color = cyan
+    elif provided_color == "light_cyan":
+        provided_color = light_cyan
+    elif provided_color == "red":
+        provided_color = red
+    elif provided_color == "light_red":
+        provided_color = light_red
+    elif provided_color == "green":
+        provided_color = green
+    elif provided_color == "light_green":
+        provided_color = light_green
+    elif provided_color == "yellow":
+        provided_color = yellow
+    elif provided_color == "light_yellow":
+        provided_color = light_yellow
+    elif provided_color == "magenta":
+        provided_color = magenta
+    elif provided_color == "light_magenta":
+        provided_color = light_magenta
+    elif provided_color == "black":
+        provided_color = black
+    elif provided_color == "white":
+        provided_color = white
+    elif provided_color == "grey":
+        provided_color = grey
+    return provided_color
+
+def determine_multi_colors(provided_colors: list) -> list:
+    for current_pos, provided_color in enumerate(provided_colors):
+        if provided_color == "blue":
+            provided_color = blue
+        elif provided_color == "light_blue":
+            provided_color = light_blue
+        elif provided_color == "cyan":
+            provided_color = cyan
+        elif provided_color == "light_cyan":
+            provided_color = light_cyan
+        elif provided_color == "red":
+            provided_color = red
+        elif provided_color == "light_red":
+            provided_color = light_red
+        elif provided_color == "green":
+            provided_color = green
+        elif provided_color == "light_green":
+            provided_color = light_green
+        elif provided_color == "yellow":
+            provided_color = yellow
+        elif provided_color == "light_yellow":
+            provided_color = light_yellow
+        elif provided_color == "magenta":
+            provided_color = magenta
+        elif provided_color == "light_magenta":
+            provided_color = light_magenta
+        elif provided_color == "black":
+            provided_color = black
+        elif provided_color == "white":
+            provided_color = white
+        elif provided_color == "grey":
+            provided_color = grey
+        provided_colors[current_pos] = provided_color
+    return provided_colors
 
 class Menu():
     def __init__(self):
@@ -149,9 +223,13 @@ class Menu():
     def _include(self, element):
         self._placeholder = self._placeholder + f"{element}\n"
     
-    def add_element(self, element_type: str, title: str, text="Python Rocks!", menu_option_number=0, accent_color=yellow, text_color=blue, title_colors=[None], os_support_color=yellow, program_version_color=blue, title_length=30, title_bar="_/", small_title="Minotaur", program_version_num=1.0, os_support_info="Linux"):
+    def add_element(self, element_type: str, title: str, text="Python Rocks!", menu_option_number=0, menu_option="an option", accent_color="yellow", text_color="blue", title_colors=["white"], os_support_color="yellow", program_version_color="blue", title_length=30, title_bar="_/", small_title="Minotaur", program_version_num=1.0, os_support_info="Linux"):
         # Preforms some basic input validation
-        validate_element_params(element_type, text, menu_option_number, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info)
+        # validate_element_params(element_type, text, menu_option_number, menu_option, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info)
+        # Creates the colors
+        accent_color = determine_color(accent_color)
+        text_color = determine_color(text_color)
+        title_colors = determine_multi_colors(title_colors)
         # If the element_type is a header...
         if element_type == "header" and title_colors[0] == None:
             rainbow_colors = [red, yellow, green, cyan, blue, magenta]
@@ -177,5 +255,87 @@ class Menu():
                 reset=reset
             ))
         # If the element type is a body...
-        if element_type == "body":
-            pass
+        elif element_type == "body":
+            self._include(self._body.format(
+                accent_color=accent_color,
+                menu_option_number=menu_option_number,
+                text_color=text_color,
+                menu_option=menu_option,
+                reset=reset
+            ))
+        elif element_type == "paragraph":
+            self._include(self._paragraph.format(
+                text_color=text_color,
+                text=text,
+                reset=reset
+            ))
+        elif element_type == "footer":
+            self._include(self._footer.format(
+                text_color=text_color,
+                # Issue: Python won't display the spaces despite there being no issue with the syntax
+                space=" " * (len(title_bar) // 2 - len(text)),
+                text=text,
+                reset=reset
+            ))
+
+
+# Example usage of the Menu class
+
+# Create an instance of the Menu class
+menu = Menu()
+
+# Add a header to the menu
+menu.add_element(
+    element_type="header",
+    title="Toolbox",
+    title_length=10,
+    title_colors=["red", "white", "blue"],
+    program_version_num=1.0,
+    os_support_info="Linux"
+)
+
+# Add body elements (menu options)
+menu.add_element(
+    title="Minotaur",
+    element_type="body",
+    menu_option_number=1,
+    menu_option="XSS Vuln Scanner",
+    accent_color="light_green",
+    text_color="white"
+)
+
+menu.add_element(
+    title="Minotaur",
+    element_type="paragraph",
+    text="XSS Vuln Scanner Description.",
+    text_color="light_cyan"
+)
+
+menu.add_element(
+    title="Minotaur",
+    element_type="body",
+    menu_option_number=2,
+    menu_option="SQLI Vuln Scanner",
+    accent_color="light_blue",
+    text_color="white"
+)
+
+menu.add_element(
+    title="Minotaur",
+    element_type="paragraph",
+    text="SQLI Vuln Scanner Description.",
+    text_color="light_cyan"
+)
+
+# Add a footer to the menu
+menu.add_element(
+    title="Minotaur",
+    element_type="footer",
+    text="[!] Warning: This is a test UX menu!",
+    title_length=10,
+    text_color="grey",
+    title_bar="_/"
+)
+
+# Print the constructed menu
+print(menu._placeholder)
