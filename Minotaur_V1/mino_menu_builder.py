@@ -1,8 +1,5 @@
 # Imports PIP modules
 import colorama
-# Imports Custom Modules
-import frankenstien
-import mino_menu_titles
 
 # Colour objects, used for nicer output
 reset = colorama.Fore.RESET
@@ -28,7 +25,7 @@ def check_menu_num(mn):
         return int(mn)
     except:
         raise ValueError(f"{red}Menu_num must be an integer or an integer in string form!{reset} {blue}[EX: 1 or '1']{reset}")
-
+"""
 # builds the UX menu along with its title and returns it
 def m_builder(tool_num: int, smn: str, mops: dict, meds: dict, special_mops={}, special_mops_check=False) -> object:
     # Grabs the needed menu options, menu descriptions, and special menu options info
@@ -139,12 +136,10 @@ def main_menu():
         5: "scans a website for SQLI vulnerabilities", 6: "adds a junk data to a file, encrypts it with aes, then overwrites it and deletes it"
     }
 
-"""
 header/title = head
 body/menu_item = body
 descriptions = guts
 
-"""
 def add_header():
     pass
 
@@ -156,3 +151,4 @@ def add_description():
 
 def call_menu():
     pass
+"""

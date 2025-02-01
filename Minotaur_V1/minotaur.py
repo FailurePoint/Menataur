@@ -1,20 +1,12 @@
-# External imports
+# Imports
 import colorama
-import os
+
+# Initialize Colorama
+colorama.init()
 
 # :: Global Variables :: #
 
-# Used to check the provided colors to insure they are supported by the program
-supported_colors = ["blue", "light_blue", 
-                    "cyan", "light_cyan",
-                    "red", "light_red",
-                    "green", "light_green", 
-                    "yellow", "light_yellow",
-                    "magenta", "light_magenta"
-                    "black", "white", "grey"
-                ]
-
-# color objects, used for nicer output
+# Color objects, used for nicer output
 reset = colorama.Fore.RESET
 blue = colorama.Fore.BLUE
 light_blue = colorama.Fore.LIGHTBLUE_EX
@@ -32,310 +24,188 @@ white = colorama.Fore.WHITE
 grey = colorama.Fore.LIGHTBLACK_EX
 black = colorama.Fore.BLACK
 
-# Checks a list of colors in order to make sure the colors provided are valid and supported by the program
-def check_colors(provided_colors: list):
-    # Converts every alphabetical characters to its lowercase form and ensures every color is a string
-    for current_position, color in enumerate(provided_colors):
-        provided_colors[current_position] = str(color).lower()
-        if color in supported_colors:
-            pass
-        else:
-            print(f"""
-            \n{red}[!] Minotaur Error: {yellow}'{color}'{light_red} is an unsupported or invalid color.
-            \n{magenta}Supported Colors:{green}
-            \nblue, light_blue
-            \ncyan, light_cyan
-            \nred, light_red
-            \ngreen, light_green
-            \nyellow, light_yellow
-            \nmagenta, light_magenta
-            \nblack, white grey
-            """)
-            exit()
+# Used to check the provided colors to ensure they are supported by the program and set the color value if its supported
+supported_colors = {
+    "blue": blue, "light_blue": light_blue, 
+    "cyan": cyan, "light_cyan": light_cyan,
+    "red": red, "light_red": light_red,
+    "green": green, "light_green": light_green, 
+    "yellow": yellow, "light_yellow": light_yellow,
+    "magenta": magenta, "light_magenta": light_magenta,
+    "black": black, "white": white, "grey": grey
+}
 
-def validate_element_params(element_type, text, menu_option_number, menu_option, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info):
-    # Validates the element_type
-    if isinstance(element_type, str):
-        pass
+# Validates the colors provided by the user
+def validate_color(color: str):
+    supported_color_strings = supported_colors.keys()
+    # Returns the color value if the color was valid, else an error message is printed to the console
+    color = color.lower()
+    if color in supported_color_strings:
+        return supported_colors[color]
     else:
-        print(f"{red}[!] Minotaur Error: {yellow}'element_type'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the text type
-    if isinstance(text, str):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'text'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the menu_option_number
-    if isinstance(menu_option_number, int):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'menu_option_number{light_red} must be type: {yellow}int{reset}")
-        exit()
-    # Validates the menu_option
-    if isinstance(menu_option, str):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'menu_option{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the accent_color
-    if isinstance(accent_color, str):
-        check_colors([accent_color])
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'accent_color'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the text_color
-    if isinstance(text_color, str):
-        check_colors([text_color])
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'text color'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the title_colors
-    if isinstance(title_colors, list):
-        check_colors([title_colors])
-    else:
-        print(f"{red}[!] Minotaur Erorr: {yellow}'title_colors'{light_red} must be type: {yellow}list{reset}")
-        exit()
-    # Validates the os_support_color
-    if isinstance(os_support_color, str):
-        check_colors([os_support_color])
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'os_support_color'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the program_version_color
-    if isinstance(program_version_color, str):
-        check_colors([program_version_color])
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'program_version_color'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the title_length
-    if isinstance(title_length, int):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'title_length'{light_red} must be type: {yellow}int{reset}")
-        exit()
-    # Validates the title_bar
-    if isinstance(title_bar, str):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'title_bar'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the small_title
-    if isinstance(small_title, str):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'small_title'{light_red} must be type: {yellow}str{reset}")
-        exit()
-    # Validates the program_version_num
-    if isinstance(program_version_num, float):
-        pass
-    elif isinstance(program_version_num, int):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'program_version_num'{light_red} must be type: {yellow}float or int{reset}")
-        exit()
-    # Validates the os_support_info
-    if isinstance(os_support_info, str):
-        pass
-    else:
-        print(f"{red}[!] Minotaur Error: {yellow}'os_support_info'{light_red} must be type: {yellow}str{reset}")
+        print(f"{red}[!] Minotaur Error (line 45): {yellow}{color}{light_red} is not a valid color or is unsupported.{reset}")
+        print(f"{green}The following colors are supported:{reset}")
+        for color_str in supported_color_strings:
+            print(f"{blue}{color_str}{reset}")
         exit()
 
-# Used to set the color to the actual color
-def determine_color(provided_color: str) -> str:
-    if provided_color == "blue":
-        provided_color = blue
-    elif provided_color == "light_blue":
-        provided_color = light_blue
-    elif provided_color == "cyan":
-        provided_color = cyan
-    elif provided_color == "light_cyan":
-        provided_color = light_cyan
-    elif provided_color == "red":
-        provided_color = red
-    elif provided_color == "light_red":
-        provided_color = light_red
-    elif provided_color == "green":
-        provided_color = green
-    elif provided_color == "light_green":
-        provided_color = light_green
-    elif provided_color == "yellow":
-        provided_color = yellow
-    elif provided_color == "light_yellow":
-        provided_color = light_yellow
-    elif provided_color == "magenta":
-        provided_color = magenta
-    elif provided_color == "light_magenta":
-        provided_color = light_magenta
-    elif provided_color == "black":
-        provided_color = black
-    elif provided_color == "white":
-        provided_color = white
-    elif provided_color == "grey":
-        provided_color = grey
-    return provided_color
-
-def determine_multi_colors(provided_colors: list) -> list:
-    for current_pos, provided_color in enumerate(provided_colors):
-        if provided_color == "blue":
-            provided_color = blue
-        elif provided_color == "light_blue":
-            provided_color = light_blue
-        elif provided_color == "cyan":
-            provided_color = cyan
-        elif provided_color == "light_cyan":
-            provided_color = light_cyan
-        elif provided_color == "red":
-            provided_color = red
-        elif provided_color == "light_red":
-            provided_color = light_red
-        elif provided_color == "green":
-            provided_color = green
-        elif provided_color == "light_green":
-            provided_color = light_green
-        elif provided_color == "yellow":
-            provided_color = yellow
-        elif provided_color == "light_yellow":
-            provided_color = light_yellow
-        elif provided_color == "magenta":
-            provided_color = magenta
-        elif provided_color == "light_magenta":
-            provided_color = light_magenta
-        elif provided_color == "black":
-            provided_color = black
-        elif provided_color == "white":
-            provided_color = white
-        elif provided_color == "grey":
-            provided_color = grey
-        provided_colors[current_pos] = provided_color
-    return provided_colors
-
-class Menu():
+# Menu Builder Class
+class Minotaur():
     def __init__(self):
         # Placeholder for the menu text
         self._placeholder = ""
-        # Placeholder for the menu format strings
-        self._header = "{title}\n{title_bar}\n{program_version_color}{program_version_num}\n{os_support_color}{os_support_info}{reset}"
-        self._body = "{accent_color}{menu_option_number}) {text_color}{menu_option}{reset}"
+        # Placeholder Format Strings
+        self._header = "{title}\n{title_bar}\n{program_version_color}{program_version_num}\n{os_support_message_color}{os_support_highlight_color}{os_support_color}{os_support_info}{highlight_reset}{reset}"
+        self._body = "{accent_color}{menu_option_number}) {menu_option_color}{menu_option}{reset}"
         self._paragraph = "{text_color}{text}{reset}"
-        self._footer = "{text_color}{space}{text}{space}{reset}"
-    # Adds a new element to the menu interface
+        # NOTE: The footer is simular to the paragraph but its text is centered based on the width of the title (default: 5 chars)
+        self._footer = "{text_color}{text}{reset}"
+
+    # Adds a new element to the menu
     def _include(self, element):
         self._placeholder = self._placeholder + f"{element}\n"
-    
-    def add_element(self, element_type: str, title: str, text="Python Rocks!", menu_option_number=0, menu_option="an option", accent_color="yellow", text_color="blue", title_colors=["white"], os_support_color="yellow", program_version_color="blue", title_length=30, title_bar="_/", small_title="Minotaur", program_version_num=1.0, os_support_info="Linux"):
-        # Preforms some basic input validation
-        # validate_element_params(element_type, text, menu_option_number, menu_option, accent_color, text_color, title_colors, os_support_color, program_version_color, title_length, title_bar, small_title, program_version_num, os_support_info)
-        # Creates the colors
-        accent_color = determine_color(accent_color)
-        text_color = determine_color(text_color)
-        title_colors = determine_multi_colors(title_colors)
-        # If the element_type is a header...
-        if element_type == "header" and title_colors[0] == None:
-            rainbow_colors = [red, yellow, green, cyan, blue, magenta]
-            rainbow_title = ''.join(rainbow_colors[char % len(rainbow_colors)] + title[char] for char in range(len(title)))
-            self._include(self._header.format(
-                title=rainbow_title,
-                title_bar=title_bar,
-                program_version_color=program_version_color,
-                program_version_num=program_version_num,
-                os_support_color=os_support_color,
-                os_support_info=os_support_info,
-                reset=reset
-            ))
-        elif element_type == "header" and title_colors[0] != None:
-            colorful_title = ''.join(title_colors[char % len(title_colors)] + title[char] for char in range(len(title)))
-            self._include(self._header.format(
-                title=colorful_title,
-                title_bar=title_bar,
-                program_version_color=program_version_color,
-                program_version_num=program_version_num,
-                os_support_color=os_support_color,
-                os_support_info=os_support_info,
-                reset=reset
-            ))
-        # If the element type is a body...
-        elif element_type == "body":
-            self._include(self._body.format(
-                accent_color=accent_color,
-                menu_option_number=menu_option_number,
-                text_color=text_color,
-                menu_option=menu_option,
-                reset=reset
-            ))
-        elif element_type == "paragraph":
-            self._include(self._paragraph.format(
-                text_color=text_color,
-                text=text,
-                reset=reset
-            ))
-        elif element_type == "footer":
-            self._include(self._footer.format(
-                text_color=text_color,
-                # Issue: Python won't display the spaces despite there being no issue with the syntax
-                space=" " * (len(title_bar) // 2 - len(text)),
-                text=text,
-                reset=reset
-            ))
 
+    # Adds a header element to the menu
+    def add_header(self, title: str, title_colors: list, title_width: int, title_bar: list, program_version_color: str, program_version_num: str, os_support_message_color: str, os_support_highlight_color: str, os_support_color: str, os_support_info: list):
+        # Validates the colors in the title colors list and gets the real color if they are valid
+        for current_pos, color in enumerate(title_colors):
+            title_colors[current_pos] = validate_color(color)
+        # Creates the title bar using the title width (total_chars = title_width + 5)
+        # NOTE: title_width should be an integer representing the character width of the title
+        # NOTE: title_bar[0] is the main portion of the title_bar and title_bar[1] is the finishing touch
+        title_bar = f"{title_bar[0] * (title_width + 4)}{title_bar[1]}"
+        # Validates the os_support_highlight_color and sets its value
+        valid_colors = supported_colors.keys()
+        if os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "blue":
+            os_support_highlight_color = colorama.Back.BLUE
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_blue":
+            os_support_highlight_color = colorama.Back.LIGHTBLUE_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "cyan":
+            os_support_highlight_color = colorama.Back.CYAN
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_cyan":
+            os_support_highlight_color = colorama.Back.LIGHTCYAN_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "red":
+            os_support_highlight_color = colorama.Back.RED
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_red":
+            os_support_highlight_color = colorama.Back.LIGHTRED_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "green":
+            os_support_highlight_color = colorama.Back.GREEN
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_green":
+            os_support_highlight_color = colorama.Back.LIGHTGREEN_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "yellow":
+            os_support_highlight_color = colorama.Back.YELLOW
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_yellow":
+            os_support_highlight_color = colorama.Back.LIGHTYELLOW_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "magenta":
+            os_support_highlight_color = colorama.Back.MAGENTA
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "light_magenta":
+            os_support_highlight_color = colorama.Back.LIGHTMAGENTA_EX
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "white":
+            os_support_highlight_color = colorama.Back.WHITE
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "black":
+            os_support_highlight_color = colorama.Back.BLACK
+        elif os_support_highlight_color.lower() in valid_colors and os_support_highlight_color == "grey":
+            os_support_highlight_color = colorama.Back.LIGHTBLACK_EX
+        else:
+            print(f"{red}[!] Minotaur Error (line 79): {yellow}{os_support_highlight_color}{light_red} is not a valid color or is unsupported.{reset}")
+            print(f"{green}The following colors are supported:{reset}")
+            for color_str in valid_colors:
+                print(f"{blue}{color_str}{reset}")
+            exit()
+        # Creates a colorful title using the provided title and title colors
+        colorful_title = ''.join(title_colors[char % len(title_colors)] + title[char] for char in range(len(title)))
+        os_support_info_str = ''.join(os_support_info)  # Join the list into a string
+        # Adds the header elements (title, os support information, etc.) to the menu
+        self._include(self._header.format(
+            title=colorful_title,
+            title_bar=title_bar,
+            program_version_color=validate_color(program_version_color),
+            program_version_num=program_version_num,
+            os_support_message_color=validate_color(os_support_message_color),
+            os_support_highlight_color=os_support_highlight_color,
+            os_support_color=validate_color(os_support_color),
+            os_support_info=os_support_info_str,
+            highlight_reset=colorama.Back.RESET,
+            reset=reset
+        ))
+    # Adds the body elements (menu options) to the menu
+    def add_body(self, accent_color: str, menu_option_number: int, menu_option_color: str, menu_option: str):
+        self._include(self._body.format(
+            accent_color=validate_color(accent_color),
+            menu_option_number=menu_option_number,
+            menu_option_color=validate_color(menu_option_color),
+            menu_option=menu_option,
+            reset=reset
+        ))
+    # Adds the paragraph elements (descriptions) to the menu
+    def add_paragraph(self, text_color: str, text: str, title_width=5):
+        self._include(self._paragraph.format(
+            text_color=validate_color(text_color),
+            text=text,
+            reset=reset
+        ))
+    # Adds the footer element (warning message, thank you message, etc.) to the menu
+    def add_footer(self, text_color: str, text: str, title_width=5):
+        # Checks the title width to ensure it is an integer
+        if isinstance(title_width, int):
+            pass
+        else:
+            print(f"{red}[!] Minotaur Error (line 122): {yellow}title_width {light_red}must be type: {yellow}int{reset}")
+        text = f"{' ' * (title_width // 2)}{text}{' ' * (title_width // 2)}"
+        # Centers the text on the page based on the current title width, default is 5 characters if the title width is not provided
+        self._include(self._paragraph.format(
+            text_color=validate_color(text_color),
+            text=text,
+            reset=reset
+        ))
 
-# Example usage of the Menu class
+# TODO: Add the ASCII Art title, the small title, finish the os support info stuff, re-organise the string to finish the program
+# NOTE: Maybe change to title_bar_width, math: f"{title_bar[0] * (title_bar_width - 1)}{title_bar[0]}" 
 
-# Create an instance of the Menu class
-menu = Menu()
+# Example usage of the Minotaur class
 
-# Add a header to the menu
-menu.add_element(
-    element_type="header",
-    title="Toolbox",
-    title_length=10,
-    title_colors=["red", "white", "blue"],
-    program_version_num=1.0,
-    os_support_info="Linux"
+# Create an instance of the Minotaur class
+menu = Minotaur()
+
+# Define the header elements
+title = "Minotaur Menu"
+title_colors = ["red", "white", "blue"]
+title_width = len(title)
+title_bar = ["_", "/"]  # Main part and finishing touch
+program_version_color = "green"
+program_version_num = "v1.0.0"
+os_support_message_color = "yellow"
+os_support_highlight_color = "light_green"
+os_support_color = "white"
+os_support_info = ["Windows, macOS, and Linux"]
+
+# Add the header to the menu
+menu.add_header(
+    title=title,
+    title_colors=title_colors,
+    title_width=title_width,
+    title_bar=title_bar,
+    program_version_color=program_version_color,
+    program_version_num=program_version_num,
+    os_support_message_color=os_support_message_color,
+    os_support_highlight_color=os_support_highlight_color,
+    os_support_color=os_support_color,
+    os_support_info=os_support_info
 )
 
-# Add body elements (menu options)
-menu.add_element(
-    title="Minotaur",
-    element_type="body",
-    menu_option_number=1,
-    menu_option="XSS Vuln Scanner",
-    accent_color="light_green",
-    text_color="white"
-)
+# Define body elements (menu options)
+menu.add_body(accent_color="light_yellow", menu_option_number=1, menu_option_color="green", menu_option="Start Game")
+menu.add_body(accent_color="light_yellow", menu_option_number=2, menu_option_color="green", menu_option="Load Game")
+menu.add_body(accent_color="light_yellow", menu_option_number=3, menu_option_color="green", menu_option="Settings")
+menu.add_body(accent_color="light_yellow", menu_option_number=4, menu_option_color="green", menu_option="Exit")
 
-menu.add_element(
-    title="Minotaur",
-    element_type="paragraph",
-    text="XSS Vuln Scanner Description.",
-    text_color="light_cyan"
-)
+# Add a paragraph (description)
+description_text = "Please select an option from the menu above."
+menu.add_paragraph(text_color="cyan", text=description_text)
 
-menu.add_element(
-    title="Minotaur",
-    element_type="body",
-    menu_option_number=2,
-    menu_option="SQLI Vuln Scanner",
-    accent_color="light_blue",
-    text_color="white"
-)
+# Add a footer (thank you message)
+footer_text = "Thank you for using the Minotaur Menu!"
+menu.add_footer(text_color="magenta", text=footer_text, title_width=title_width)
 
-menu.add_element(
-    title="Minotaur",
-    element_type="paragraph",
-    text="SQLI Vuln Scanner Description.",
-    text_color="light_cyan"
-)
-
-# Add a footer to the menu
-menu.add_element(
-    title="Minotaur",
-    element_type="footer",
-    text="[!] Warning: This is a test UX menu!",
-    title_length=10,
-    text_color="grey",
-    title_bar="_/"
-)
-
-# Print the constructed menu
+# Print the complete menu
 print(menu._placeholder)
