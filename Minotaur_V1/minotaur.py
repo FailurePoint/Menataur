@@ -1,6 +1,6 @@
-# Imports
+# :: Imports :: #
 
-# Colorama - Copyright (c) 2013-2023, Anthony Sottile
+# Colorama - Copyright (c) 2013-2023, Anthony Sottile, All Rights Reserved
 import colorama
 
 # :: Global Variables :: #
