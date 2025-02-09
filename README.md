@@ -1,10 +1,10 @@
 # :: Author Information and Program Details :: #
 
-Module Name: Menataur (Menataur/menataur.py)
-Author: Gratonic (https://github.com/Gratonic)
-Contributing Author: FailurePoint (https://github.com/FailurePoint)
-Written In: Python 3.10.12
-Dependencie(s): colorama
+Module Name: Menataur (Menataur/menataur.py) | 
+Author: Gratonic (https://github.com/Gratonic) | 
+Contributing Author: FailurePoint (https://github.com/FailurePoint) | 
+Written In: Python 3.10.12 | 
+Dependencie(s): colorama | 
 Last Modified: February 9th, 2025
 
 # :: Description :: #
@@ -24,34 +24,13 @@ in just HTML and CSS.
 
 # :: Example Usage :: #
 
-# Imports the module
+## Imports the module
 import menataur
 
-# Creates an instance of Minotaur (the menu class)
+## Creates an instance of Minotaur (the menu class)
 menu = menataur.Minotaur()
 
-# Define the elements for the menu
-ascii_art_title = r\"""
- _______ _________ _        _______ _________ _______           _______ 
-(       )\__   __/( (    /|(  ___  )\__   __/(  ___  )|\     /|(  ____ )
-| () () |   ) (   |  \  ( || (   ) |   ) (   | (   ) || )   ( || (    )|
-| || || |   | |   |   \ | || |   | |   | |   | (___) || |   | || (____)|
-| |(_)| |   | |   | (\ \) || |   | |   | |   |  ___  || |   | ||     __)
-| |   | |   | |   | | \   || |   | |   | |   | (   ) || |   | || (\ (   
-| )   ( |___) (___| )  \  || (___) |   | |   | )   ( || (___) || ) \ \__
-|/     \|\_______/|/    )_)(_______)   )_(   |/     \|(_______)|/   \__/
-\"""
-small_title = "Minotaur"
-title_colors = ["red", "white", "blue"]
-title_bar = "_______________________________________________________________________________________/"
-program_version_color = "green"
-program_version_num = "1.0"
-os_support_message_color = "yellow"
-os_support_highlight_color = "light_green"
-os_support_color = "light_cyan"
-os_support_info = ["Windows", "Linux", "MacOS"]
-
-# Add the header to the menu
+## Add the header to the menu
 menu.add_header(
     ascii_art_title=ascii_art_title,
     small_title=small_title,
@@ -65,7 +44,7 @@ menu.add_header(
     os_support_info=os_support_info
 )
 
-# Add body elements (menu options)
+## Add body elements (menu options)
 menu.add_paragraph(text_color="grey", text="Have some fun at a party")
 menu.add_body(accent_color="magenta", menu_option_number=1, menu_option_color="light_cyan", menu_option="Party")
 menu.add_paragraph(text_color="grey", text="Drink way too much")
@@ -75,8 +54,8 @@ menu.add_body(accent_color="magenta", menu_option_number=3, menu_option_color="l
 menu.add_paragraph(text_color="grey", text="All three")
 menu.add_body(accent_color="magenta", menu_option_number=4, menu_option_color="light_cyan", menu_option="The Works")
 
-# Add a footer (thank you message)
+## Add a footer (thank you message)
 menu.add_footer(text_color="light_yellow", text="Thank you for using Minotaur!")
 
-# Completes and calls the menu
+## Completes and calls the menu
 menu.execute()
