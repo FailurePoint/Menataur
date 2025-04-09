@@ -2,7 +2,7 @@
 import minotaur
 
 # Creates an instance of Minotaur (the menu class)
-menu = minotaur.Minotaur()
+menu = minotaur.Menataur()
 
 # Define the elements for the menu
 ascii_art_title = r"""

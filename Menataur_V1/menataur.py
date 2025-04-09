@@ -104,7 +104,7 @@ def validate_highlight_color(high_color: str) -> str:
             exit()
 
 # Menu Builder Class
-class Minotaur():
+class Menataur():
     def __init__(self):
         self._placeholder = ""
         self._header = "{ascii_art_title}\n{title_bar}\n{program_version_color}{small_title} v{program_version_num}\n{os_support_message}{reset}"
