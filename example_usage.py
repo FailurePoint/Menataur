@@ -1,5 +1,5 @@
 # Imports the module
-import minotaur
+import menataur
 
 # Creates an instance of Minotaur (the menu class)
 menu = minotaur.Menataur()
